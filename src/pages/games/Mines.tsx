@@ -2,17 +2,18 @@ import React, { useState } from 'react';
 import { Bomb, Gem } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Slider } from '@/components/ui/slider';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import Layout from '@/components/Layout';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
 
 const GRID_SIZE = 25;
-const BOMB_COUNT = 5;
 
 const Mines: React.FC = () => {
   const { user, updateBalance, addBet } = useAuth();
   const [betAmount, setBetAmount] = useState('10');
+  const [bombCount, setBombCount] = useState(5);
   const [gameActive, setGameActive] = useState(false);
   const [revealed, setRevealed] = useState<Set<number>>(new Set());
   const [bombs, setBombs] = useState<Set<number>>(new Set());
@@ -32,9 +33,9 @@ const Mines: React.FC = () => {
 
     updateBalance(-amount);
     
-    // Generate random bomb positions
+    // Generate random bomb positions based on user selection
     const bombPositions = new Set<number>();
-    while (bombPositions.size < BOMB_COUNT) {
+    while (bombPositions.size < bombCount) {
       bombPositions.add(Math.floor(Math.random() * GRID_SIZE));
     }
 
@@ -106,8 +107,8 @@ const Mines: React.FC = () => {
             <CardDescription>Find diamonds and avoid bombs. Cash out before it's too late!</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="flex gap-4 items-end">
-              <div className="flex-1">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+              <div>
                 <label className="text-sm text-muted-foreground mb-2 block">Bet Amount</label>
                 <Input
                   type="number"
@@ -119,10 +120,27 @@ const Mines: React.FC = () => {
                   step="1"
                 />
               </div>
+              <div>
+                <label className="text-sm text-muted-foreground mb-2 block">
+                  Number of Bombs: {bombCount}
+                </label>
+                <Slider
+                  value={[bombCount]}
+                  onValueChange={(value) => setBombCount(value[0])}
+                  min={1}
+                  max={15}
+                  step={1}
+                  disabled={gameActive}
+                  className="mt-2"
+                />
+              </div>
+            </div>
+
+            <div className="flex gap-4">
               <Button 
                 onClick={startGame} 
                 disabled={gameActive}
-                className="glow-primary"
+                className="glow-primary flex-1"
               >
                 Start Game
               </Button>

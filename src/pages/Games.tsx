@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Zap, Trophy, CircleDot } from 'lucide-react';
+import { Zap, Trophy, CircleDot, Plane, Rocket } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Layout from '@/components/Layout';
@@ -9,11 +9,27 @@ const Games: React.FC = () => {
   const games = [
     {
       title: 'Mines',
-      description: 'Find diamonds and avoid bombs. Cash out before it\'s too late!',
+      description: 'Find diamonds and avoid bombs. Configure bomb count and cash out anytime!',
       icon: Zap,
       color: 'from-primary to-primary/60',
       path: '/games/mines',
       odds: 'Up to 50x'
+    },
+    {
+      title: 'Aviator',
+      description: 'Watch the plane fly higher! Cash out before it crashes.',
+      icon: Plane,
+      color: 'from-blue-500 to-blue-600',
+      path: '/games/aviator',
+      odds: 'Up to 100x'
+    },
+    {
+      title: 'Crash Duplo',
+      description: 'Two simultaneous crash games - double your action!',
+      icon: Rocket,
+      color: 'from-purple-500 to-purple-600',
+      path: '/games/crash-duplo',
+      odds: 'Up to 50x each'
     },
     {
       title: 'Slots',
@@ -41,7 +57,7 @@ const Games: React.FC = () => {
           <p className="text-muted-foreground">Choose your game and start winning!</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {games.map((game) => {
             const Icon = game.icon;
             return (

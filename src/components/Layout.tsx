@@ -11,6 +11,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const navItems = [
     { path: '/', label: 'Home', icon: Home },
     { path: '/games', label: 'Games', icon: Gamepad2 },
+    { path: '/wallet', label: 'Wallet', icon: Wallet },
     { path: '/my-bets', label: 'My Bets', icon: ListOrdered },
     { path: '/account', label: 'Account', icon: User },
   ];
